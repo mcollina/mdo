@@ -3,11 +3,6 @@ Feature: Add to list
   As a User
   I want to add elements to todo lists
 
-  Scenario: Create a todo list
-    Given I have no lists
-    When I add the list "first"
-    Then I should see "Created a new list named 'first'"
-
   Scenario: Add an element to a todo list
     Given I have the "first" list
     When I add the "hello" element to the "first" list
