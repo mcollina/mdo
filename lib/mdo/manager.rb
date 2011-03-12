@@ -7,13 +7,13 @@ module MDO
     end
 
     def add_list(name)
-      if blank? name
-        @output.puts("Impossible to add a list with blank name.")
-      elsif include? name
-        @output.puts("There is already a list named '#{name}'.")
+      if include_list? name
+        p("There is already a list named '#{name}'.")
+      elsif blank_list_name? name
+        p("Impossible to add a list with blank name.")
       else
         @lists << name
-        @output.puts("Created a new list named '#{name}'.")
+        p("Created a new list named '#{name}'.")
       end
     end
 
@@ -21,14 +21,17 @@ module MDO
 
     end
 
-    def include? name
-      @lists.include? name
+    private
+    def include_list? name
+      @lists.include?(name)
     end
 
-    private
+    def blank_list_name? name
+      (name.nil? or name == "")
+    end
 
-    def blank? name
-      name.nil? or name == ""
+    def p message
+      @output.puts(message)
     end
   end
 end
