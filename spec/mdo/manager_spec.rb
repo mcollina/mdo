@@ -26,6 +26,11 @@ module MDO
         output.should_receive(:puts).with("Created a new list named 'first'.")
         manager.add("first", "element")
       end
+
+      it "should not automatically create a list if it has a blank name" do
+        output.should_receive(:puts).with("Impossible to add a list with blank name.")
+        manager.add("", "element")
+      end
     end
 
     context "with 1 list" do

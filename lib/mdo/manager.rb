@@ -9,8 +9,10 @@ module MDO
     def add_list(name)
       if include_list? name
         p("There is already a list named '#{name}'.")
+        nil
       elsif name.blank? 
         p("Impossible to add a list with blank name.")
+        nil
       else
         @lists[name] = List.new(self, name)
         p("Created a new list named '#{name}'.")
@@ -18,8 +20,9 @@ module MDO
     end
 
     def add(list, element)
-      add_list(list) unless include_list? list
-      @lists[list] << element
+      if include_list? list or add_list(list)
+        @lists[list] << element
+      end
     end
 
     def p message

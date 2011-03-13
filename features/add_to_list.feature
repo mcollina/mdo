@@ -22,8 +22,13 @@ Feature: Add to list
     And I should see "Added the 'second' element to the 'three-elements-list' list in position 2."
     And I should see "Added the 'third' element to the 'three-elements-list' list in position 3."
 
-  Scenario: Automatically create list if doesn't exists
+  Scenario: Automatically create the list if doesn't exists
     Given I have no lists
     When I add the "first" element to the "new-list" list
     Then I should see "Created a new list named 'new-list'."
     And I should see "Added the 'first' element to the 'new-list' list in position 1."
+
+  Scenario: Impossible to automatically create the list if doesn't exists 
+    Given I have no lists
+    When I add the "first" element to the "" list
+    Then I should see "Impossible to add a list with blank name."
