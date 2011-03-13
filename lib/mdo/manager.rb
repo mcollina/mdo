@@ -18,11 +18,8 @@ module MDO
     end
 
     def add(list, element)
-      if include_list? list
-        @lists[list] << element
-      else
-        p "There is no '#{list}' list."
-      end
+      add_list(list) unless include_list? list
+      @lists[list] << element
     end
 
     def p message

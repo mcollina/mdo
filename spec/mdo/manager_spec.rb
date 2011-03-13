@@ -22,19 +22,9 @@ module MDO
         manager.add_list(nil)
       end
 
-      it "should not add an element to a non-existent list" do
-        output.should_receive(:puts).with("There is no 'first' list.")
+      it "should automatically create a list when adding an element" do
+        output.should_receive(:puts).with("Created a new list named 'first'.")
         manager.add("first", "element")
-      end
-
-      it "should not add an element to a blank list" do
-        output.should_receive(:puts).with("There is no '' list.")
-        manager.add("", "element")
-      end
-
-      it "should not add an element to a nil list" do
-        output.should_receive(:puts).with("There is no '' list.")
-        manager.add(nil, "element")
       end
     end
 
