@@ -3,35 +3,35 @@ module MDO
   class Manager
     def initialize(output)
       @output = output
-      @lists = []
+      @lists = {}
     end
 
     def add_list(name)
       if include_list? name
         p("There is already a list named '#{name}'.")
-      elsif blank_list_name? name
+      elsif name.blank? 
         p("Impossible to add a list with blank name.")
       else
-        @lists << name
+        @lists[name] = List.new(self, name)
         p("Created a new list named '#{name}'.")
       end
     end
 
     def add(list, element)
+      if include_list? list
+        @lists[list] << element
+      else
+        p "There is no '#{list}' list."
+      end
+    end
 
+    def p message
+      @output.puts(message)
     end
 
     private
     def include_list? name
       @lists.include?(name)
-    end
-
-    def blank_list_name? name
-      (name.nil? or name == "")
-    end
-
-    def p message
-      @output.puts(message)
     end
   end
 end

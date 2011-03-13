@@ -33,7 +33,7 @@ Given /^I have the "([^"]*)" list$/ do |name|
   mdo.add_list name
 end
 
-When /^I add the "([^"]*)" element to the "([^"]*)" list$/ do |list, element|
+When /^I add the "([^"]*)" element to the "([^"]*)" list$/ do |element, list|
   mdo.add(list, element)
 end
 

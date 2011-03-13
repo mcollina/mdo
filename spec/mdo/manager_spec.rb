@@ -21,6 +21,21 @@ module MDO
         output.should_receive(:puts).with("Impossible to add a list with blank name.")
         manager.add_list(nil)
       end
+
+      it "should not add an element to a non-existent list" do
+        output.should_receive(:puts).with("There is no 'first' list.")
+        manager.add("first", "element")
+      end
+
+      it "should not add an element to a blank list" do
+        output.should_receive(:puts).with("There is no '' list.")
+        manager.add("", "element")
+      end
+
+      it "should not add an element to a nil list" do
+        output.should_receive(:puts).with("There is no '' list.")
+        manager.add(nil, "element")
+      end
     end
 
     context "with 1 list" do
