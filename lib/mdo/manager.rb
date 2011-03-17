@@ -20,13 +20,12 @@ module MDO
       else
         @lists[name] = List.new(name, self)
         p("Created a new list named '#{name}'.")
+        @lists[name]
       end
     end
 
-    def add(list, element)
-      if include_list? list or add_list(list)
-        @lists[list] << element
-      end
+    def find(list)
+      include_list?(list) && @lists[list] || add_list(list)
     end
 
     def p message

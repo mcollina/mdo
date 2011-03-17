@@ -6,7 +6,8 @@ module MDO
     desc "add LIST ITEM", "Adds an item to a list."
     def add(list, element)
       load!
-      manager.add(list, element)
+      list = manager.find(list)
+      list.add(element) if list
       save!
     end
 

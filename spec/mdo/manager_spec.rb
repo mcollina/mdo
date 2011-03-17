@@ -23,14 +23,19 @@ module MDO
         manager.add_list(nil)
       end
 
-      it "should automatically create a list when adding an element" do
+      it "should automatically create a list when we search for it but it doesn't exists" do
         output.should_receive(:puts).with("Created a new list named 'first'.")
-        manager.add("first", "element")
+        manager.find("first")
       end
 
       it "should not automatically create a list if it has a blank name" do
         output.should_receive(:puts).with("Impossible to add a list with blank name.")
-        manager.add("", "element")
+        manager.find("")
+      end
+
+      it "should calls add_list if no list was found" do
+        manager.should_receive(:add_list).with("first").and_return(:list)
+        manager.find("first").should == :list
       end
     end
 
@@ -47,6 +52,10 @@ module MDO
       it "should add another list" do
         output.should_receive(:puts).with("Created a new list named 'second'.")
         manager.add_list("second")
+      end
+
+      it "should find it" do
+        manager.find("first").should_not be_nil
       end
 
       it "should be persistable" do

@@ -10,9 +10,19 @@ module MDO
     end
 
     describe "#add" do
+      before(:each) do
+        @list = double("list").as_null_object
+        manager.stub(:find).with("list").and_return(@list)
+      end
+
       it "should add an element" do
-        manager.should_receive(:add).with("list", "element")
+        @list.should_receive(:add).with("element")
         subject.add("list", "element")
+      end
+
+      it "should not add an element if the list wasn't found" do
+        manager.stub(:find).with("another_list").and_return(nil)
+        expect { subject.add("another_list", "element") }.should_not raise_error
       end
 
       it "should load and save the manager from the default configuration" do
