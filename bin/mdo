@@ -1,0 +1,12 @@
+#! /usr/bin/env ruby
+
+require 'rubygems'
+
+begin
+  require 'mdo'
+rescue Exception => e
+  $:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
+  require 'mdo'
+end
+
+MDO::CLI.start

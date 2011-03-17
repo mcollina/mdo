@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 module MDO
   describe List do
     let(:manager) { double("Manager").as_null_object }
-    let(:list) { List.new(manager, "first") }
+    let(:list) { List.new("first", manager) }
 
     context "with no elements" do
       it "should add an element to that list" do
@@ -31,6 +31,23 @@ module MDO
         manager.should_receive(:p).with("Added the 'second_element' element to the 'first' list in position 2.")
         list.add("second_element")
       end
+    end
+
+    it "should not persist the manager to yaml" do
+      list.to_yaml_properties.should_not include("@manager")
+    end
+
+    it { list.should respond_to(:manager) }
+    it { list.should respond_to(:manager=) }
+
+    it "should have the same manager that was passed to the constructor" do 
+      list.manager.should == manager 
+    end
+
+    it "should be able to set the manager from the outside" do
+      manager = double("new_manager")
+      list.manager = manager
+      list.manager.should == manager
     end
   end
 end

@@ -1,7 +1,10 @@
+require 'yaml'
 
 module MDO
   class List
-    def initialize(manager, name)
+    attr_accessor :manager
+
+    def initialize(name, manager)
       @elements = []
       @manager = manager
       @name = name
@@ -17,6 +20,12 @@ module MDO
     end
 
     alias :<< :add
+
+    def to_yaml_properties
+      yaml_properties = super
+      yaml_properties.delete("@manager")
+      yaml_properties
+    end
 
     private
 

@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'stringio'
 
 module MDO
   describe Manager do
@@ -47,6 +48,42 @@ module MDO
         output.should_receive(:puts).with("Created a new list named 'second'.")
         manager.add_list("second")
       end
+
+      it "should be persistable" do
+        io = StringIO.new
+        manager.stub(:open).with("dest", "w").and_yield(io)
+        manager.save("dest")
+
+        io.rewind
+
+        new_output = double("new_output")
+        other = Manager.new(new_output)
+        other.stub(:open).with("dest").and_yield(io)
+        other.load("dest")
+
+        new_output.should_receive(:puts).with("There is already a list named 'first'.")
+        other.add_list("first")
+      end
+
+      it "should reset the manager on persist" do
+        io = StringIO.new
+        manager.stub(:open).with("dest", "w").and_yield(io)
+        manager.save("dest")
+
+        io.rewind
+
+        other = Manager.new(output)
+        other.stub(:open).with("dest").and_yield(io)
+        other.load("dest")
+
+        other.lists["first"].manager.should == other
+      end
+    end
+
+    it "should load an empty file" do
+      other = Manager.new(output)
+      other.stub(:open).with("dest").and_yield(StringIO.new)
+      expect { other.load("dest") }.should_not raise_error
     end
   end
 end

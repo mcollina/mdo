@@ -1,5 +1,5 @@
 
-class Output
+class Output < IO
   attr_reader :messages
 
   def initialize
@@ -12,9 +12,9 @@ class Output
 end
 
 def mdo
-  return @mdo if @mdo
-  @output = Output.new
-  @mdo ||= MDO::Manager.new(@output)
+  @output ||= Output.new
+  @tempfile ||= Tempfile.new("mdo")
+  mdo = MDO::CLI.new([], { :output => @output, :location => @tempfile.path })
 end
 
 Given /^I have no lists$/ do
@@ -22,7 +22,7 @@ Given /^I have no lists$/ do
 end
 
 When /^I add the list "([^"]*)"$/ do |name|
-  mdo.add_list name
+  mdo.invoke(:add_list, [name])
 end
 
 Then /^I should see "([^"]*)"$/ do |message|
@@ -30,10 +30,10 @@ Then /^I should see "([^"]*)"$/ do |message|
 end
 
 Given /^I have the "([^"]*)" list$/ do |name|
-  mdo.add_list name
+  mdo.invoke(:add_list, [name])
 end
 
 When /^I add the "([^"]*)" element to the "([^"]*)" list$/ do |element, list|
-  mdo.add(list, element)
+  mdo.invoke(:add, [list, element])
 end
 
