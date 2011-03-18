@@ -7,7 +7,7 @@ module MDO
 
     context "with no elements" do
       it "should add an element to that list" do
-        manager.should_receive(:p).with("Added the 'hello' element to the 'first' list in position 1.")
+        manager.should_receive(:p).with("1: hello.")
         list.add("hello")
       end
 
@@ -33,7 +33,7 @@ module MDO
       end
 
       it "should add another element changing the position" do
-        manager.should_receive(:p).with("Added the 'second_element' element to the 'first' list in position 2.")
+        manager.should_receive(:p).with("2: second_element.")
         list.add("second_element")
       end
 

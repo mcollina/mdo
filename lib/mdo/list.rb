@@ -15,7 +15,7 @@ module MDO
         p "Impossible to add a blank element to the 'first' list."
       else
         @elements << element
-        p "Added the '#{element}' element to the '#{@name}' list in position #{@elements.size}."
+        puts_element(@elements.size - 1)
       end
     end
 
@@ -30,8 +30,8 @@ module MDO
     def display!
       p "There are no elements." if @elements.size == 0
 
-      @elements.each_with_index do |el, index|
-        p "#{index + 1}: #{el}."
+      @elements.each_index do |index|
+        puts_element(index)
       end
     end
 
@@ -39,6 +39,10 @@ module MDO
 
     def p(message)
       @manager.p(message)
+    end
+
+    def puts_element(index)
+      p "#{index + 1}: #{@elements[index]}."
     end
   end
 end
