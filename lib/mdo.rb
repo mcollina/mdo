@@ -5,7 +5,7 @@ module MDO
   autoload :CLI, "mdo/cli"
 
   def self.user_home_dir
-    ["HOME", "HOMEPATH"].detect { |h| ENV[h] != nil }
+    ENV[["HOME", "HOMEPATH"].detect { |h| ENV[h] != nil }]
   end
 
   def self.default_location

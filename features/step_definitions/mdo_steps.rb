@@ -34,7 +34,8 @@ Given /^I have the "([^"]*)" list$/ do |name|
 end
 
 When /^I add the "([^"]*)" element to the "([^"]*)" list$/ do |element, list|
-  mdo.invoke(:add, [list, element])
+  args = [list] + element.split(" ")
+  mdo.invoke(:add, args)
 end
 
 When /^I ask for the "([^"]*)" list elements$/ do |list|

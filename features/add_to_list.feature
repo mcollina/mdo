@@ -32,3 +32,8 @@ Feature: Add to list
     Given I have no lists
     When I add the "first" element to the "" list
     Then I should see "Impossible to add a list with blank name."
+
+  Scenario: Add a multi word element
+    Given I have the "first" list
+    When I add the "hello world" element to the "first" list
+    Then I should see "Added the 'hello world' element to the 'first' list in position 1."

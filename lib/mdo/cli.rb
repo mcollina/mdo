@@ -4,9 +4,9 @@ module MDO
   class CLI < Thor
 
     desc "add LIST ITEM", "Adds an item to a list."
-    def add(list, element)
+    def add(list, *element)
       load_and_save do
-        find(list) { |list| list.add(element) }
+        find(list) { |list| list.add(element.join(" ")) }
       end
     end
 

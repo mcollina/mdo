@@ -20,6 +20,11 @@ module MDO
         subject.add("list", "element")
       end
 
+      it "should add a multi word element" do
+        @list.should_receive(:add).with("hello world")
+        subject.add("list", "hello", "world")
+      end
+
       it "should not add an element if the list wasn't found" do
         manager.stub(:find).with("another_list").and_return(nil)
         expect { subject.add("another_list", "element") }.should_not raise_error
