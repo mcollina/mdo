@@ -37,3 +37,7 @@ When /^I add the "([^"]*)" element to the "([^"]*)" list$/ do |element, list|
   mdo.invoke(:add, [list, element])
 end
 
+When /^I ask for the "([^"]*)" list elements$/ do |list|
+  mdo.invoke(:show, [list])
+end
+

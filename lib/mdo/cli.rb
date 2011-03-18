@@ -5,17 +5,23 @@ module MDO
 
     desc "add LIST ITEM", "Adds an item to a list."
     def add(list, element)
-      load!
-      list = manager.find(list)
-      list.add(element) if list
-      save!
+      load_and_save do
+        find(list) { |list| list.add(element) }
+      end
     end
 
     desc "add_list LIST", "Creates a list."
     def add_list(list)
-      load!
-      manager.add(list)
-      save!
+      load_and_save do
+        manager.add(list)
+      end
+    end
+
+    desc "show LIST", "show the lists elements"
+    def show(list)
+      load_and_save do
+        find(list) { |l| l.display! }
+      end
     end
 
     private
@@ -39,6 +45,17 @@ module MDO
 
     def location
       options[:location] || MDO.default_location
+    end
+
+    def find(list)
+      list = manager.find(list)
+      yield list if list
+    end
+
+    def load_and_save
+      load!
+      yield
+      save!
     end
   end
 end

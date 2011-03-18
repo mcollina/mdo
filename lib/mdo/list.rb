@@ -27,6 +27,14 @@ module MDO
       yaml_properties
     end
 
+    def display!
+      p "There are no elements." if @elements.size == 0
+
+      @elements.each_with_index do |el, index|
+        p "#{index + 1}: #{el}."
+      end
+    end
+
     private
 
     def p(message)

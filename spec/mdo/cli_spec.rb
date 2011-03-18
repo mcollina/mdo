@@ -39,6 +39,31 @@ module MDO
       end
     end
 
+    describe "#show" do
+      before(:each) do
+        @list = double("list").as_null_object
+        manager.stub(:find).with("list").and_return(@list)
+      end
+
+      it "should display an element" do
+        @list.should_receive(:display!)
+        subject.show("list")
+      end
+
+      it "should load and save the manager from the default configuration" do
+        File.stub!(:exists?).and_return(true)
+        manager.should_receive(:load).with(File.join(MDO.user_home_dir, ".mdo")).ordered
+        manager.should_receive(:save).with(File.join(MDO.user_home_dir, ".mdo")).ordered
+        subject.add("list", "element")
+      end
+
+      it "should not load but save the manager if the default location doesn't exists" do
+        File.stub!(:exists?).and_return(false)
+        manager.should_receive(:save).with(File.join(MDO.user_home_dir, ".mdo"))
+        subject.add("list", "element")
+      end
+    end
+
     describe "#add_list" do
       it "should add a list" do
         manager.should_receive(:add).with("list")

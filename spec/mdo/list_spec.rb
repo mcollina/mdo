@@ -20,6 +20,11 @@ module MDO
         manager.should_receive(:p).with("Impossible to add a blank element to the 'first' list.")
         list.add(nil)
       end
+
+      it "should display none" do
+        manager.should_receive(:p).with("There are no elements.")
+        list.display!
+      end
     end
 
     context "with 1 element" do
@@ -30,6 +35,24 @@ module MDO
       it "should add another element changing the position" do
         manager.should_receive(:p).with("Added the 'second_element' element to the 'first' list in position 2.")
         list.add("second_element")
+      end
+
+      it "should display the element" do
+        manager.should_receive(:p).with("1: first_element.")
+        list.display!
+      end
+    end
+
+    context "with 2 elements" do
+      before(:each) do
+        list.add("first_element")
+        list.add("second_element")
+      end
+
+      it "should display the elements" do
+        manager.should_receive(:p).with("1: first_element.").ordered
+        manager.should_receive(:p).with("2: second_element.").ordered
+        list.display!
       end
     end
 
