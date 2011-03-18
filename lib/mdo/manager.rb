@@ -10,7 +10,7 @@ module MDO
       @lists = {}
     end
 
-    def add_list(name)
+    def add(name)
       if include_list? name
         p("There is already a list named '#{name}'.")
         nil
@@ -25,7 +25,7 @@ module MDO
     end
 
     def find(list)
-      include_list?(list) && @lists[list] || add_list(list)
+      include_list?(list) && @lists[list] || add(list)
     end
 
     def p message

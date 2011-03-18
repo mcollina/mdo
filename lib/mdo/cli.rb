@@ -14,7 +14,7 @@ module MDO
     desc "add_list LIST", "Creates a list."
     def add_list(list)
       load!
-      manager.add_list(list)
+      manager.add(list)
       save!
     end
 

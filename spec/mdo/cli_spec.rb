@@ -41,7 +41,7 @@ module MDO
 
     describe "#add_list" do
       it "should add a list" do
-        manager.should_receive(:add_list).with("list")
+        manager.should_receive(:add).with("list")
         subject.add_list("list")
       end
 

@@ -10,17 +10,17 @@ module MDO
     context "with no lists" do
       it "should add a list with name 'first'" do
         output.should_receive(:puts).with("Created a new list named 'first'.")
-        manager.add_list("first")
+        manager.add("first")
       end
 
       it "should not add an empty list" do
         output.should_receive(:puts).with("Impossible to add a list with blank name.")
-        manager.add_list("")
+        manager.add("")
       end
 
       it "should not add a nil list" do
         output.should_receive(:puts).with("Impossible to add a list with blank name.")
-        manager.add_list(nil)
+        manager.add(nil)
       end
 
       it "should automatically create a list when we search for it but it doesn't exists" do
@@ -33,25 +33,25 @@ module MDO
         manager.find("")
       end
 
-      it "should calls add_list if no list was found" do
-        manager.should_receive(:add_list).with("first").and_return(:list)
+      it "should calls add if no list was found" do
+        manager.should_receive(:add).with("first").and_return(:list)
         manager.find("first").should == :list
       end
     end
 
     context "with 1 list" do
       before(:each) do
-        manager.add_list("first")
+        manager.add("first")
       end
 
       it "should not add another list with the same name" do
         output.should_receive(:puts).with("There is already a list named 'first'.")
-        manager.add_list("first")
+        manager.add("first")
       end
 
       it "should add another list" do
         output.should_receive(:puts).with("Created a new list named 'second'.")
-        manager.add_list("second")
+        manager.add("second")
       end
 
       it "should find it" do
@@ -71,7 +71,7 @@ module MDO
         other.load("dest")
 
         new_output.should_receive(:puts).with("There is already a list named 'first'.")
-        other.add_list("first")
+        other.add("first")
       end
 
       it "should reset the manager on persist" do
