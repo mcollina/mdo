@@ -24,6 +24,13 @@ module MDO
       end
     end
 
+    desc "lists", "show the lists"
+    def lists
+      load_and_save do
+        manager.display!
+      end
+    end
+
     private
     def manager
       @manager ||= Manager.new(output)

@@ -5,6 +5,10 @@ module MDO
     let(:manager) { double("Manager").as_null_object }
     let(:list) { List.new("first", manager) }
 
+    it "should have a name" do
+      list.name.should == "first"
+    end
+
     context "with no elements" do
       it "should add an element to that list" do
         manager.should_receive(:p).with("1: hello.")

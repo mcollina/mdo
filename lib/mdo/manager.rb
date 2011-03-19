@@ -3,29 +3,27 @@ require 'yaml'
 module MDO
   class Manager
     
-    attr_reader :lists
-
     def initialize(output)
       @output = output
-      @lists = {}
+      @lists = []
     end
 
     def add(name)
-      if include_list? name
+      if get(name)
         p("There is already a list named '#{name}'.")
         nil
       elsif name.blank? 
         p("Impossible to add a list with blank name.")
         nil
       else
-        @lists[name] = List.new(name, self)
+        @lists << List.new(name, self)
         p("Created a new list named '#{name}'.")
-        @lists[name]
+        @lists.last
       end
     end
 
     def find(list)
-      include_list?(list) && @lists[list] || add(list)
+      get(list) || add(list)
     end
 
     def p message
@@ -35,8 +33,8 @@ module MDO
     def load(source)
       open(source) do |io|
         yaml = YAML.load(io.read)
-        @lists = yaml.to_hash if yaml.respond_to? :to_hash
-        @lists.each_value { |l| l.manager = self }
+        @lists = yaml if yaml
+        @lists.each { |l| l.manager = self }
       end
     end
 
@@ -46,9 +44,17 @@ module MDO
       end
     end
 
-    private
-    def include_list? name
-      @lists.include?(name)
+    def display!
+      p "There are no lists." if @lists.size == 0
+      @lists.each_with_index do |list, index|
+        p "#{index + 1}: #{list.name}."
+      end
     end
+
+    def get name
+      @lists.find { |l| l.name == name }
+    end
+
+    alias :[] :get
   end
 end

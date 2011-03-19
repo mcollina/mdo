@@ -3,6 +3,7 @@ require 'yaml'
 module MDO
   class List
     attr_accessor :manager
+    attr_reader :name
 
     def initialize(name, manager)
       @elements = []

@@ -42,3 +42,6 @@ When /^I ask for the "([^"]*)" list elements$/ do |list|
   mdo.invoke(:show, [list])
 end
 
+When /^I show the lists$/ do
+  mdo.invoke(:lists, [])
+end

@@ -37,6 +37,11 @@ module MDO
         manager.should_receive(:add).with("first").and_return(:list)
         manager.find("first").should == :list
       end
+
+      it "should display no lists." do
+        output.should_receive(:puts).with("There are no lists.")
+        manager.display!
+      end
     end
 
     context "with 1 list" do
@@ -85,7 +90,25 @@ module MDO
         other.stub(:open).with("dest").and_yield(io)
         other.load("dest")
 
-        other.lists["first"].manager.should == other
+        other["first"].manager.should == other
+      end
+
+      it "should display the list" do
+        output.should_receive(:puts).with("1: first.")
+        manager.display!
+      end
+    end
+
+    context "with 2 lists" do
+      before(:each) do
+        manager.add("first")
+        manager.add("second")
+      end
+
+      it "should display the lists" do
+        output.should_receive(:puts).with("1: first.").ordered
+        output.should_receive(:puts).with("2: second.").ordered
+        manager.display!
       end
     end
 
