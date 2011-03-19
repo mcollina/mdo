@@ -97,6 +97,10 @@ module MDO
         output.should_receive(:puts).with("1: first.")
         manager.display!
       end
+
+      it "should get the list by name" do
+        manager["first"].should == manager.find("first")
+      end
     end
 
     context "with 2 lists" do
@@ -116,6 +120,15 @@ module MDO
       other = Manager.new(output)
       other.stub(:open).with("dest").and_yield(StringIO.new)
       expect { other.load("dest") }.should_not raise_error
+    end
+
+    it "should get no value when getting a non-existent list" do
+      output.should_not_receive(:puts)
+      manager["a_list"]
+    end
+
+    it "should get nil when getting a non-existitent list" do
+      manager["a_list"].should be_nil
     end
   end
 end
